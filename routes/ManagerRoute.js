@@ -26,7 +26,7 @@ router.route("/delete-categorie/:id").delete(
 
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
-        cb(null, "repas");
+        cb(null, "./img");
     },
     filename: function (req, file, cb) {
         cb(null, Date.now() + "-" + file.originalname);
@@ -42,8 +42,9 @@ router.route("/all-repas").get(
 router.route("/one-repas/:id").get(
         middleware.isManagerAuthenticated,
         repasController.getOne_repas);
-router.route("/add-repas",uploadRepas.array("image", 20)).post(
+router.route("/add-repas").post(
     middleware.isManagerAuthenticated,
+    uploadRepas.array("image"),
     repasController.add_repas);
 router.route("/update-repas/:id").put(
         middleware.isManagerAuthenticated,

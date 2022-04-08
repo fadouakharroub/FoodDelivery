@@ -1,6 +1,5 @@
 const Categorie = require("../models/CategorieModel");
 
-
 const getAll_categorie = async (req, res) => {
   const categorie = await Categorie.find();
   if (!categorie) {

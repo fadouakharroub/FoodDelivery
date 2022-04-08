@@ -23,7 +23,7 @@ const add_repas = async (req, res) => {
   const {
     error
   } = repasValidation.addRepasValidation(req.body);
-  
+  console.log(req.files)
   const uploadedImageFiles = req.files;
   let images = [];
   for (const uploadedImageFile of uploadedImageFiles) {
@@ -36,6 +36,7 @@ const add_repas = async (req, res) => {
     categorie_name,
     description
   } = req.body;
+  console.log(req.files);
   const repas = await Repas.create({
     name,
     type,
