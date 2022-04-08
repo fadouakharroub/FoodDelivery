@@ -8,9 +8,7 @@ const repasShema = new mongoose.Schema({
         max: 255,
         min: 5,
       },
-    type: {
-      type: String,
-    },
+  
     price: {
       type: Number,
     },

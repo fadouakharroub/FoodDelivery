@@ -9,14 +9,7 @@ const categorieSchema = new mongoose.Schema(
       max: 255,
       min: 5,
     },
-    id_repas: {
-      type: String,
-      unique: true,
-      required: true,
-      trim: true,
-      max: 255,
-      min: 6,
-    },
+  
    
    
   },

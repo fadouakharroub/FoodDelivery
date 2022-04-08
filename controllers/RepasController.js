@@ -6,7 +6,7 @@ const repasValidation = require("../validation/repas");
 const getAll_repas = async (req, res) => {
   const repas = await Repas.find();
   if (!repas) {
-    return res.status(400).send("😒 Sorry We can't find any repas");
+    return res.status(400).send("Sorry We can't find any repas");
   }
   res.status(200).send(repas);
 };
@@ -54,10 +54,10 @@ const update_repas = async (req, res) => {
   const repas = await Repas.findById(repasId);
   if (!repas)
     return res.status(400).send("Sorry We Can Not Find Repas With Given Id!");
-  if (req.files.length < 1 || req.files.length > 4) {
+  if (req.files.length < 1 || req.files.length > 2) {
     const unwantedImage = req.files;
     deleteFile.deleteFile(unwantedImage);
-    return res.status(400).send("Please choose between 1 and 4 images");
+    return res.status(400).send("Please choose between 1 and 2 images");
   }
   const {
     error
@@ -67,7 +67,7 @@ const update_repas = async (req, res) => {
     deleteFile.deleteFile(unwantedImage);
     return res.status(400).send(error.details[0].message);
   }
-  let repasImage = repas.image;
+  let repasImages = repas.image;
   deleteFile.deleteExistingFile(repasImages);
   const uploadedImageFiles = req.files;
   let images = [];
