@@ -7,6 +7,8 @@ const middleware = require("../middlewares/auth");
 const categorieController = require("../controllers/CategorieController");
 const repasController = require("../controllers/RepasController");
 
+const restauController = require("../controllers/RestauController");
+
 
 
 router.route("/all-categories").get(
@@ -52,6 +54,37 @@ router.route("/update-repas/:id").put(
 router.route("/delete-repas/:id").delete(
         middleware.isManagerAuthenticated,
         repasController.removeOne_repas);
+
+
+        const storag = multer.diskStorage({
+            destination: function (req, file, cb) {
+                cb(null, "./img");
+            },
+            filename: function (req, file, cb) {
+                cb(null, Date.now() + "-" + file.originalname);
+            },
+        });
+        const uploadRestau = multer({
+            storag: storag,
+        });
+
+
+router.route("/all-restau").get(
+            middleware.isManagerAuthenticated,
+            restauController.getAll_restau);
+router.route("/one-restau/:id").get(
+                middleware.isManagerAuthenticated,
+                restauController.getOne_restau);
+router.route("/add-restau").post(
+            middleware.isManagerAuthenticated,
+            uploadRestau.array("image"),
+            restauController.add_restau);
+router.route("/update-restau/:id").put(
+                middleware.isManagerAuthenticated,
+                restauController.update_restau);
+router.route("/delete-restau/:id").delete(
+                middleware.isManagerAuthenticated,
+                restauController.removeOne_repas);
 
 
 

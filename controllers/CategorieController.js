@@ -32,7 +32,7 @@ const add_categorie = async (req, res) => {
 
 const removeOne_categorie = async (req, res) => {
   const id = req.params.id;
-  const categorie = await Categorie.deleteOne({
+  const categorie = await categorie.deleteOne({
     id,
   });
   res.status(200).send("your categorie has been deleted");
