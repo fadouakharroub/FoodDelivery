@@ -1,0 +1,16 @@
+.logo{
+  max-width:90px;
+}
+.min-height{
+  min-height: 560px;
+}
+.hotel-images{
+  max-height: 650px;
+}
+.bg-dark,#dropdown-basic-button{
+  background-color: #31D2F2 !important;
+  color: #ffffff;
+}
+img{
+  width: 90px;
+}
