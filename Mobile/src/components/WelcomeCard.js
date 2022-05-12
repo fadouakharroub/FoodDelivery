@@ -1,13 +1,13 @@
 import React from 'react';
 import { StyleSheet, Text, View, Image} from 'react-native';
 import { Display } from '../utils';
-import {Fonts } from '../contants';
+import {Fonts, Colors, Images} from '../contants';
 
 
 const WelcomeCard = (title, content, image) => {
   return (
     <View style={styles.container}>
-        <Image style={styles.image} source/>
+        <Image style={styles.image} source={Images[image]} resizeMode="contain"/>
         <Text style={styles.titleText}>{title}</Text>
         <Text style={styles.contentText}>{content}</Text>
     </View>
