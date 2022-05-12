@@ -1,6 +1,7 @@
 import React from 'react';
 import { StyleSheet, Text, View, StatusBar, Image} from 'react-native';
-import {Colors, Images }from '../contants';
+import {Colors, Images, Fonts }from '../contants';
+import { Display } from '../utils';
 const SplashScreen = () => {
   return (
     <View style={styles.container}>
@@ -25,12 +26,13 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   Image: {
-      height: 150,
-      width: 150
+      height: Display.setHeight(30),
+      width:  Display.setWidth(60),
   },
   titleText: {
-      color: Colors.DEFAULT_WHITE,
+      color: Colors.DEFAULT_BLACK,
       fontSize: 32,
+      fontFamily: Fonts.POPPINS_EXTRA_LIGHT,
   }
 });
 
