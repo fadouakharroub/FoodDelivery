@@ -1,10 +1,10 @@
 import React from 'react';
 import { StyleSheet, Text, View, Image} from 'react-native';
 import { Display } from '../utils';
-import {Fonts, Colors, Images} from '../contants';
+import {Fonts, Colors, Images} from '../contents';
 
 
-const WelcomeCard = (title, content, image) => {
+const WelcomeCard = ({title, content, image}) => {
   return (
     <View style={styles.container}>
         <Image style={styles.image} source={Images[image]} resizeMode="contain"/>

@@ -1,26 +1,45 @@
-import React, {useState} from 'react';
+ import React, {useState, useRef} from 'react';
 import { StyleSheet, 
   Text, 
   View, 
   StatusBar, 
   FlatList, 
   TouchableOpacity} from 'react-native';
-import { Colors, Fonts } from '../contants';
+import { Colors, Fonts, General } from '../contents';
 import { WelcomeCard, Separator} from '../components';
 import { Display } from '../utils';
 
-const Pagination = () => {
+const pageStyle = isActive => isActive 
+  ? styles.page
+  : {...styles.page, backgroundColor: Colors.DEFAULT_GREY};
+
+const Pagination = (index) => {
   return (
     <View style={styles.pageContainer}>
-      <View style={styles.page} />
-      <View style={styles.page} />
-      <View style={styles.page} />
+        {[...Array(General.WELCOME_CONTENTS.length).keys()].map((_, i) => i 
+        === index ? (
+          <View style={pageStyle(true)} key={i} />
+        ) : (
+          <View style={pageStyle(false)} key={i} />
+),
+        )}
     </View>
-  )
-}
+  );
+};
 
-const WelcomeScreen = () => {
-  const []
+const WelcomeScreen = ({navigation}) => {
+  const [welcomeListIndex, setWelcomeListIndex] = useState(0);
+  const WelcomeList = useRef();
+  const onViewRef = useRef(({changed}) => {
+     setWelcomeListIndex(changed[0].index);
+  });
+  const viewConfigRef = useRef({viewAreaCoveragePercentThreshold: 50})
+
+  const pageScroll = () => {
+    WelcomeList.current.scrollToIndex({
+      index: welcomeListIndex < 2 ? welcomeListIndex + 1 : welcomeListIndex,
+    })
+  }
   return (
     <View style={styles.container}>
       <StatusBar
@@ -32,29 +51,47 @@ const WelcomeScreen = () => {
       <Separator height={Display.setHeight(8)}/>
       <View style={styles.welcomeListContainer}>
          <FlatList 
-         data={General.WELCOME_CONTENT}µ
+         ref={WelcomeList}
+         data={General.WELCOME_CONTENTS}
          keyExtractor={item => item.title}
          horizontal
          showsHorizontalScrollIndicator={false}
          pagingEnabled
          overScrollMode='never'
+         viewAbilityConfig={viewConfigRef.current}
+         onViewableItemsChanged={onViewRef.current}
          renderItem={({item}) => <WelcomeCard {...item}/> }
 />
       </View>
-      <Separator height={StatusBar.currentHeight}/>
-      <Pagination />
-      <Separator height={StatusBar.currentHeight}/>
-      <View style={styles.buttonContainer}>
-        <TouchableOpacity activeOpacity={0.8} style={{marginLeft: 10}}>
-           <Text style={styles.buttonText}>SKIP</Text>
+      <Separator height={Display.setHeight(8)} />
+      <Pagination index={welcomeListIndex} />
+      <Separator height={Display.setHeight(8)} />
+      {welcomeListIndex === 2 ? (
+        <TouchableOpacity
+          style={styles.gettingStartedButton}
+          activeOpacity={0.8}
+          onPress={() => navigation.navigate('SignIn')}>
+          <Text style={styles.gettingStartedButtonText}>Get Started</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.button} activeOpacity={0.8}>
-           <Text style={styles.buttonText}>NEXT</Text>
-        </TouchableOpacity>
-      </View>
+      ) : (
+        <View style={styles.buttonContainer}>
+          <TouchableOpacity
+            activeOpacity={0.8}
+            style={{marginLeft: 10}}
+            onPress={() => WelcomeList.current.scrollToEnd()}>
+            <Text style={styles.buttonText}>SKIP</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.button}
+            activeOpacity={0.8}
+            onPress={() => pageScroll()}>
+            <Text style={styles.buttonText}>NEXT</Text>
+          </TouchableOpacity>
+        </View>
+      )}
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -84,7 +121,7 @@ welcomeListContainer: {
   buttonText: {
     fontSize: 16,
     fontFamily: Fonts.POPPINS_BOLD,
-    lineHeight: 16*1.4,
+    lineHeight: 16 *  1.4,
   },
   button: {
     backgroundColor: Colors.LIGHT_GREEN,
@@ -92,6 +129,21 @@ welcomeListContainer: {
     paddingHorizontal: 11,
     borderRadius: 32,
   },
+  gettingStartedButton: {
+    backgroundColor: Colors.DEFAULT_GREEN,
+    paddingVertical: 5,
+    paddingHorizontal: 40,
+    borderRadius: 8,
+    justifyContent: 'center',
+    alignItems: 'center',
+    elevation: 2,
+  },
+  gettingStartedButtonText: {
+    fontSize: 20,
+    color: Colors.DEFAULT_WHITE,
+    lineHeight: 20 * 1.4,
+    fontFamily: Fonts.POPPINS_MEDIUM,
+  }
   
 });
 
