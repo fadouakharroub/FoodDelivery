@@ -35,13 +35,18 @@ function Meal({ role, userId }) {
     setShowUpdate(false);
   };
   const [Meals, setMeals] = useState([]);
-  const [secteurs, setSecteurs] = useState([]);
+  const [Restaurants, setRestaurants] = useState([]);
+  const [Categorys, setCategorys] = useState([]);
+
   useEffect(() => {
     API.get(`meal`).then((res) => {
       setMeals(res.data);
     });
-    API.get(`secteur`).then((res) => {
-      setSecteurs(res.data);
+    API.get(`restaurant`).then((res) => {
+      setRestaurants(res.data);
+    });
+    API.get(`category`).then((res) => {
+      setCategorys(res.data);
     });
 
   }, [showAdd, showDelete, showUpdate, role, userId]);
@@ -83,7 +88,9 @@ function Meal({ role, userId }) {
                 </td>
                 <td>{meal.name}</td>
                 <td>{meal.description}</td>
-                <td>{meal.price}</td>
+                <td>{meal.price} Dh</td>
+                <td>{meal.restaurant?.name}</td>
+                <td>{meal.category?.name}</td>
                 <td>
                   <BsFillTrashFill
                     className="m-2"
@@ -103,7 +110,8 @@ function Meal({ role, userId }) {
         showUpdate={showUpdate}
         CloseUpdatePopup={CloseUpdatePopup}
         updatedMeal={updatedMeal}
-        secteurs={secteurs}
+        Restaurants={Restaurants}
+        Categorys={Categorys}
       />
       <DeleteMeal
         showDelete={showDelete}
@@ -113,7 +121,8 @@ function Meal({ role, userId }) {
       <AddMeal
         showAdd={showAdd}
         CloseAddPopup={CloseAddPopup}
-        secteurs={secteurs}
+        Restaurants={Restaurants}
+        Categorys={Categorys}
       />
     </div>
   );

@@ -8,9 +8,10 @@
   max-height: 650px;
 }
 .bg-dark,#dropdown-basic-button{
-  background-color: #31D2F2 !important;
+  background-color: rgba(5, 116, 227, 0.781) !important;
   color: #ffffff;
 }
 img{
   width: 90px;
 }
+

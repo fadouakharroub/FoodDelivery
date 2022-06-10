@@ -24,17 +24,10 @@ const Sidebar = ({ role }) => {
 
         <CDBSidebarContent className="sidebar-content ">
           <CDBSidebarMenu>
-            <NavLink to="/" activeclassname="activeClicked">
-              <CDBSidebarMenuItem icon="columns">Dashboard</CDBSidebarMenuItem>
-            </NavLink>
 
             <NavLink to="/profile" activeclassname="activeClicked">
               <CDBSidebarMenuItem icon="user">Profile</CDBSidebarMenuItem>
             </NavLink>
-
-                  <NavLink to="/tables" activeclassname="activeClicked">
-                    <CDBSidebarMenuItem icon="table">Users</CDBSidebarMenuItem>
-                  </NavLink>
                 <NavLink to="/category" activeclassname="activeClicked">
                   <CDBSidebarMenuItem icon="th-large">Categorys</CDBSidebarMenuItem>
                 </NavLink>
@@ -45,6 +38,11 @@ const Sidebar = ({ role }) => {
                 <NavLink to="/restaurant" activeclassname="activeClicked">
                 <CDBSidebarMenuItem icon="hotel">
                 Restaurants
+                </CDBSidebarMenuItem>
+              </NavLink>
+              <NavLink to="/meal" activeclassname="activeClicked">
+                <CDBSidebarMenuItem icon="shopping-bag">
+                Meals
                 </CDBSidebarMenuItem>
               </NavLink>
           </CDBSidebarMenu>

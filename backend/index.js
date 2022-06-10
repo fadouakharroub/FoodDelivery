@@ -20,7 +20,7 @@ const app = express();
 app.use(cookieParser());
 const cors = require("cors");
 const corsOptions = {
-  origin: "http://localhost:3000",
+  origin: ["http://localhost:3000",'http://localhost:19006'],
   credentials: true,
 };
 app.use(cors(corsOptions));

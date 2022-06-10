@@ -1,22 +1,22 @@
 import React, { useState, useEffect } from "react";
 import { Modal, Button } from "react-bootstrap";
 import API from "../../Api";
-function UpdateRestaurant({
+function UpdateMeal({
   CloseUpdatePopup,
   showUpdate,
-  updatedRestaurant,
-  secteurs,
-}) {
-  const [newRestaurant, setnewRestaurant] = useState({});
+  updatedMeal,
+  Restaurants,
+  Categorys}) {
+  const [newMeal, setnewMeal] = useState({});
   const handelChange = (e) => {
-    setnewRestaurant({ ...newRestaurant, [e.target.name]: e.target.value });
+    setnewMeal({ ...newMeal, [e.target.name]: e.target.value });
   };
   useEffect(() => {
-    setnewRestaurant(updatedRestaurant);
+    setnewMeal(updatedMeal);
   }, [showUpdate, CloseUpdatePopup]);
   const handelSubmit = () => {
     try {
-      API.patch(`restaurant/${updatedRestaurant._id}`, newRestaurant).then(
+      API.patch(`meal/${updatedMeal._id}`, newMeal).then(
         () => {
           CloseUpdatePopup();
         }
@@ -36,7 +36,7 @@ function UpdateRestaurant({
       keyboard={false}
     >
       <Modal.Header closeButton>
-        <Modal.Title>Update A Restaurant</Modal.Title>
+        <Modal.Title>Update A Meal</Modal.Title>
       </Modal.Header>
       <form className="text-start">
         <Modal.Body>
@@ -47,8 +47,8 @@ function UpdateRestaurant({
               onChange={handelChange}
               className="form-control mt-2"
               name="name"
-              placeholder="Enter Restaurant Name"
-              value={newRestaurant.name}
+              placeholder="Enter Meal Name"
+              value={newMeal.name}
               required
             />
           </div>
@@ -59,26 +59,58 @@ function UpdateRestaurant({
               onChange={handelChange}
               className="form-control mt-2"
               name="description"
-              placeholder="Enter Restaurant Description"
-              value={newRestaurant.description}
+              placeholder="Enter Meal Description"
+              value={newMeal.description}
+              required
+            />
+          </div>
+          <div className="form-group">
+            <label>Price :</label>
+            <input
+              type="number"
+              onChange={handelChange}
+              className="form-control mt-2"
+              name="price"
+              placeholder="Enter Meal Price"
+              value={newMeal.price}
               required
             />
           </div>
           <div className="form-group mt-2">
-            <label>Secteur :</label>
+            <label>Category :</label>
             <select
-              name="secteur"
+              name="category"
               className="form-control mt-2"
               onChange={handelChange}
               required
             >
-              <option value={newRestaurant.secteur?._id}>
-                {newRestaurant.secteur?.name}
+                 <option value={newMeal.category?._id}>
+                {newMeal.category?.name}
               </option>
-              {secteurs.map((secteur) => {
+              {Categorys.map((category) => {
                 return (
-                  <option key={secteur._id} value={secteur._id}>
-                    {secteur.name}
+                  <option key={category._id} value={category._id}>
+                    {category.name}
+                  </option>
+                );
+              })}
+            </select>
+          </div>
+          <div className="form-group mt-2">
+            <label>Restaurant :</label>
+            <select
+              name="restaurant"
+              className="form-control mt-2"
+              onChange={handelChange}
+              required
+            >
+                <option value={newMeal.restaurant?._id}>
+                {newMeal.restaurant?.name}
+              </option>
+              {Restaurants.map((restaurant) => {
+                return (
+                  <option key={restaurant._id} value={restaurant._id}>
+                    {restaurant.name}
                   </option>
                 );
               })}
@@ -98,4 +130,4 @@ function UpdateRestaurant({
   );
 }
 
-export default UpdateRestaurant;
+export default UpdateMeal;

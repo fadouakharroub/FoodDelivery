@@ -18,7 +18,7 @@ async function get(req, res) {
 
 async function getAll(_, res) {
   try {
-    const meal = await mealModel.find();
+    const meal = await mealModel.find().populate([{path:"restaurant",select: 'name'},{path:"category",select: 'name'}]);
     res.send(meal);
   } catch (error) {
     res.send(error);

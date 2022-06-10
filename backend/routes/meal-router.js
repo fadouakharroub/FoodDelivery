@@ -7,7 +7,7 @@ route.get("/", mealController.getAll);
 route.get("/:id", mealController.get);
 route.post(
   "/",
-  [authentication, authorization("admin", "chef secteur")],
+  // [authentication, authorization("admin", "chef secteur")],
   upload.single("image"),
   mealController.create
 );

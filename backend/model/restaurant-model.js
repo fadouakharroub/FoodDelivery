@@ -13,7 +13,7 @@ const restaurantSchema = mongoose.Schema(
     },
     image: {
         type: String,
-        // required: [true, "the image field is required"],
+        required: [true, "the image field is required"],
       },
     secteur: {
         type: mongoose.Schema.Types.ObjectId,

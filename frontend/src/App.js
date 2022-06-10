@@ -7,6 +7,7 @@ import Signup from "./components/auth/Signup";
 import Secteur from "./components/Secteurs/Secteur";
 import Restaurant from "./components/Restaurants/Restaurant";
 import Category from "./components/Categorys/Category";
+import Meal from "./components/Meals/Meal";
 import Dashboard from "./components/Dashboard";
 import SideBar from "./components/SideBar";
 import Profile from "./components/Profile";
@@ -25,8 +26,7 @@ function App() {
     setToken(cookies.get("access"));
   };
   useEffect(() => {
-    setToken(cookies.get("access"));
-    
+    setToken(cookies.get("access"));   
   }, []);
   const decodedToken = decodeToken(token);
   console.log(decodedToken)
@@ -38,7 +38,7 @@ function App() {
         >
           <div className="container-fluid mx-4">
             <Link className="navbar-brand" to="/">
-              <h3>FoodDelivery</h3>
+              <h3>YouFood</h3>
             </Link>
             <div className="float-right" id="navbarSupportedContent">
               {!decodedToken ? (
@@ -84,6 +84,7 @@ function App() {
               <Route exact path="/secteur" element={<Secteur />}></Route>
               <Route exact path="/restaurant" element={<Restaurant role={decodedToken.role} userId={decodedToken.id} />}></Route>
               <Route exact path="/category" element={<Category />}></Route>
+              <Route exact path="/meal" element={<Meal />}></Route>
 
               </>
             )}

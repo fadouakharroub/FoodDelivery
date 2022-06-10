@@ -9,6 +9,7 @@ route.post(
   "/",
   [authentication, authorization("admin", "chef secteur")],
   upload.single("image"),
+  
   restaurantController.create
 );
 route.patch(

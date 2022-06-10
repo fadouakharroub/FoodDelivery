@@ -11,20 +11,19 @@ function AddRestaurant({ showAdd, CloseAddPopup, secteurs, Client, role }) {
     e.preventDefault();
     setRestaurant({ ...restaurant, [e.target.name]: e.target.value });
   };
-
+ 
   const handelImagesChange = (e) => {
     const fileListAsArray = Array.from(e.target.files);
     setImages((prev) => fileListAsArray);
   };
 
   const handelSubmit = () => {
-
+    const data = new FormData();
+    data.append("name", restaurant.name);
+    data.append("description", restaurant.description);
+    data.append("secteur", restaurant.secteur);
+    images.map((image) => data.append("image", image));
     try {
-      const data = new FormData();
-      data.append("name", restaurant.name);
-      data.append("description", restaurant.description);
-      data.append("secteur", restaurant.secteur);
-      images.map((image) => data.append("image", image));
       API.post(`restaurant`, data).then(() => {
         CloseAddPopup();
       });
@@ -88,10 +87,10 @@ function AddRestaurant({ showAdd, CloseAddPopup, secteurs, Client, role }) {
               onChange={handelChange}
               required
             >
-              {secteurs.map((sec) => {
+              {secteurs.map((secteur) => {
                 return (
-                  <option key={sec._id} value={sec._id}>
-                    {sec.name}
+                  <option key={secteur._id} value={secteur._id}>
+                    {secteur.name}
                   </option>
                 );
               })}

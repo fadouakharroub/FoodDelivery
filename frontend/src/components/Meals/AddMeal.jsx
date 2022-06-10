@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { Modal, Button } from "react-bootstrap";
 import API from "../../Api";
-function AddRestaurant({ showAdd, CloseAddPopup, secteurs, Client, role }) {
-  const [restaurant, setRestaurant] = useState({});
+function AddMeal({ showAdd, CloseAddPopup, Restaurants, Categorys }) {
+  const [meal, setMeal] = useState({});
 
 
   const [images, setImages] = useState([]);
 
   const handelChange = (e) => {
     e.preventDefault();
-    setRestaurant({ ...restaurant, [e.target.name]: e.target.value });
+    setMeal({ ...meal, [e.target.name]: e.target.value });
   };
  
   const handelImagesChange = (e) => {
@@ -19,12 +19,14 @@ function AddRestaurant({ showAdd, CloseAddPopup, secteurs, Client, role }) {
 
   const handelSubmit = () => {
     const data = new FormData();
-    data.append("name", restaurant.name);
-    data.append("description", restaurant.description);
-    data.append("secteur", restaurant.secteur);
+    data.append("name", meal.name);
+    data.append("description", meal.description);
+    data.append("price", meal.price);
+    data.append("restaurant", meal.restaurant);
+    data.append("category", meal.category);
     images.map((image) => data.append("image", image));
     try {
-      API.post(`restaurant`, data).then(() => {
+      API.post(`meal`, data).then(() => {
         CloseAddPopup();
       });
     } catch (error) {
@@ -42,7 +44,7 @@ function AddRestaurant({ showAdd, CloseAddPopup, secteurs, Client, role }) {
       keyboard={false}
     >
       <Modal.Header closeButton>
-        <Modal.Title>Add A Restaurant</Modal.Title>
+        <Modal.Title>Add A Meal</Modal.Title>
       </Modal.Header>
       <form className="text-start">
         <Modal.Body>
@@ -53,7 +55,7 @@ function AddRestaurant({ showAdd, CloseAddPopup, secteurs, Client, role }) {
               onChange={handelChange}
               className="form-control mt-2"
               name="name"
-              placeholder="Enter Restaurant Name"
+              placeholder="Enter Meal Name"
               required
             />
           </div>
@@ -64,7 +66,18 @@ function AddRestaurant({ showAdd, CloseAddPopup, secteurs, Client, role }) {
               onChange={handelChange}
               className="form-control mt-2"
               name="description"
-              placeholder="Enter Restaurant Description"
+              placeholder="Enter Meal Description"
+              required
+            />
+          </div>
+          <div className="form-group">
+            <label>Price :</label>
+            <input
+              type="number"
+              onChange={handelChange}
+              className="form-control mt-2"
+              name="price"
+              placeholder="Enter Meal Price"
               required
             />
           </div>
@@ -75,22 +88,39 @@ function AddRestaurant({ showAdd, CloseAddPopup, secteurs, Client, role }) {
               onChange={handelImagesChange}
               className="form-control mt-2"
               name="image"
-              placeholder="Enter Restaurant price"
+              placeholder="Enter Meal price"
               required
             />
           </div>
           <div className="form-group mt-2">
-            <label>Secteur :</label>
+            <label>Category :</label>
             <select
-              name="secteur"
+              name="category"
               className="form-control mt-2"
               onChange={handelChange}
               required
             >
-              {secteurs.map((secteur) => {
+              {Categorys.map((category) => {
                 return (
-                  <option key={secteur._id} value={secteur._id}>
-                    {secteur.name}
+                  <option key={category._id} value={category._id}>
+                    {category.name}
+                  </option>
+                );
+              })}
+            </select>
+          </div>
+          <div className="form-group mt-2">
+            <label>Restaurant :</label>
+            <select
+              name="restaurant"
+              className="form-control mt-2"
+              onChange={handelChange}
+              required
+            >
+              {Restaurants.map((restaurant) => {
+                return (
+                  <option key={restaurant._id} value={restaurant._id}>
+                    {restaurant.name}
                   </option>
                 );
               })}
@@ -110,4 +140,4 @@ function AddRestaurant({ showAdd, CloseAddPopup, secteurs, Client, role }) {
   );
 }
 
-export default AddRestaurant;
+export default AddMeal;
