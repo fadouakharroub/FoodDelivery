@@ -15,7 +15,7 @@ function UpdateMeal({
     setnewMeal(updatedMeal);
   }, [showUpdate, CloseUpdatePopup]);
   const handelSubmit = () => {
-    try {
+    try { 
       API.patch(`meal/${updatedMeal._id}`, newMeal).then(
         () => {
           CloseUpdatePopup();

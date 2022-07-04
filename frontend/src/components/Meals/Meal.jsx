@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Table, Button } from "react-bootstrap";
+import { useDispatch } from "react-redux"
 import API from "../../Api";
 import DeleteMeal from "./DeleteMeal";
 import {
@@ -9,6 +10,7 @@ import {
 } from "react-icons/bs";
 import UpdateMeal from "./UpdateMeal";
 import AddMeal from "./AddMeal";
+import { addToCart } from "../cartSlice";
 
 function Meal({ role, userId }) {
   const [DeleteId, setDeleteId] = useState("");
@@ -38,6 +40,12 @@ function Meal({ role, userId }) {
   const [Restaurants, setRestaurants] = useState([]);
   const [Categorys, setCategorys] = useState([]);
 
+  const dispatch = useDispatch();
+  const handleAddToCart = (food) =>{
+
+dispatch(addToCart(food));
+  }
+
   useEffect(() => {
     API.get(`meal`).then((res) => {
       setMeals(res.data);
@@ -54,6 +62,9 @@ function Meal({ role, userId }) {
     <div className="w-100">
       <h3 className="m-3">
         Meals
+        <Button className="float-end" onClick={() => handleAddToCart(food)}>
+          Add To Cart <Cart></Cart> <BsPlusSquareFill className="m-1" />
+        </Button>
         <Button className="float-end" onClick={ShowAddPopup}>
           Add <BsPlusSquareFill className="m-1" />
         </Button>
