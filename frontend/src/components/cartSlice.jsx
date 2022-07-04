@@ -1,3 +1,4 @@
+//add to cart (redux)
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState={
